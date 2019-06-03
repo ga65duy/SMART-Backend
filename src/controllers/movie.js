@@ -65,7 +65,7 @@ const remove = (req, res) => {
 };
 
 const list  = (req, res) => {
-    MovieModel.find({}).exec()
+    MovieModel.find({}).exec()  // .find({id:x,name:"f", $contains(synopsis:"asdj")}).exec()....
         .then(movies => res.status(200).json(movies))
         .catch(error => res.status(500).json({
             error: 'Internal server error',
