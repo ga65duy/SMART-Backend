@@ -1,16 +1,15 @@
 "use strict";
 
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
 const Studyplan = new mongoose.Schema({
-    name: String,
+    name: String
 
-    courses: [{
+    /*courses: [{
         type: Schema.Types.ObjectId,
         ref: 'Course',
-        required: true
-    }],
+        required: false
+    }], */
 
 });
 
