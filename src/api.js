@@ -24,7 +24,7 @@ api.use(middlewares.allowCrossDomain);
 // Basic route
 api.get('/', (req, res) => {
     res.json({
-        name: 'SEBA Master Movie Backend'
+        name: 'SEBA Master SMART Backend'
     });
 });
 

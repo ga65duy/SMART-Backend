@@ -3,13 +3,13 @@
 const mongoose = require('mongoose');
 
 const Studyplan = new mongoose.Schema({
-    name: String
+    name: String,
 
-    /*courses: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Course',
-        required: false
-    }], */
+
+    courses: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course'
+    }],
 
 });
 

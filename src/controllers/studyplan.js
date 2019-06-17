@@ -10,8 +10,27 @@ const list  = (req, res) => {
             message: error.message
         }));
 };
+const read   = (req, res) => {
+    StudyplanModel.findById(req.params.id).exec()
+        .then(studyplan => {
+
+            if (!studyplan) return res.status(404).json({
+                error: 'Not Found',
+                message: `Studyplan not found`
+            });
+
+            res.status(200).json(studyplan)
+
+        })
+        .catch(error => res.status(500).json({
+            error: 'Internal Server Error',
+            message: error.message
+        }));
+
+};
 
 
 module.exports = {
-    list
+    list,
+    read
 };
