@@ -22,14 +22,10 @@ const UserSchema  = new mongoose.Schema({
             ref: 'Studyplan'
         }
 }]
-   /* studyplans:{
-        type: studyplan
-        TODO: nesting schemas
 
-    }*/
 });
 
 UserSchema.set('versionKey', false);
 
-// Export the Movie model
+// Export the User model
 module.exports = mongoose.model('User', UserSchema);
