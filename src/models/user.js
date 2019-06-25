@@ -16,6 +16,11 @@ const UserSchema  = new mongoose.Schema({
         required: true
 
     },
+    email: {
+        type:String
+
+    },
+
     studplans: [{
         studyplan: {
             type: mongoose.Schema.Types.ObjectId,

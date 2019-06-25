@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 
 const Studyplan = new mongoose.Schema({
     name: String,
-    university: String,
     fieldOfStudy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'FieldOfStudy'

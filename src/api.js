@@ -10,6 +10,7 @@ const auth  = require('./routes/auth');
 const movie = require('./routes/movie');
 const course = require('./routes/course');
 const studyplan = require('./routes/studyplan');
+const university= require('./routes/university');
 
 const api = express();
 
@@ -24,7 +25,7 @@ api.use(middlewares.allowCrossDomain);
 // Basic route
 api.get('/', (req, res) => {
     res.json({
-        name: 'SEBA Master SMART Backend'
+        name: 'This is the SMART Backend'
     });
 });
 
@@ -33,6 +34,7 @@ api.use('/auth'  , auth);
 api.use('/movies', movie);
 api.use('/course', course);
 api.use('/studyplan', studyplan);
+api.use('/university',university);
 
 
 module.exports = api;

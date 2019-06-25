@@ -15,7 +15,7 @@ const FieldOfStudy = new mongoose.Schema({
     madatory: [{
         type: Schema.Types.ObjectId,
         ref: 'Course',
-        required: true
+        required: true //wirklich required?
     }],
     elective: [{
         type: Schema.Types.ObjectId,
