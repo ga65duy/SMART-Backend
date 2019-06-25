@@ -29,7 +29,6 @@ const read   = (req, res) => {
 
 };
 
-
 const create = (req, res) => {
     if (Object.keys(req.body).length === 0) return res.status(400).json({
         error: 'Bad Request',
@@ -52,8 +51,8 @@ const update = (req, res) => {
             message: 'The request body is empty'
         });
     }
-
-    StudyplanModel.findByIdAndUpdate(req.params.id,req.body,{
+    console.log(req.body);
+    StudyplanModel.findByIdAndUpdate(req.params.id, req.body,{
         new: true,
         runValidators: true}).exec()
         .then(studyplan => res.status(200).json(studyplan))
@@ -63,10 +62,21 @@ const update = (req, res) => {
         }));
 };
 
+const remove = (req, res) => {
+    StudyplanModel.findByIdAndRemove(req.params.id).exec()
+        .then(studyplan =>
+        res.status(200).json({message: `Studyplan with id ${studyplan.id} was deleted`}))
+        .catch((error => res.status(500).json({
+        error: 'Internal server error',
+        message: error.message
+    })))
+};
+
 
 module.exports = {
     list,
     read,
     create,
-    update
+    update,
+    remove
 };
