@@ -32,7 +32,7 @@ api.get('/', (req, res) => {
 // API routes
 api.use('/auth'  , auth);
 api.use('/movies', movie);
-api.use('/course', course);
+api.use('/courses', course);
 api.use('/studyplan', studyplan);
 api.use('/university',university);
 

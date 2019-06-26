@@ -4,11 +4,17 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Course = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true,
+        unique: true //<- no identical names
+    },
     area: [String],
     ects: Number,
-    numberOfApplicants: Number,
-    avgRating: Number,
+    avgRatingOverall: Number,
+    avgRatingLecturer: Number,
+    avgRatingExam:Number,
+    avgRatingContent: Number
 
 });
 

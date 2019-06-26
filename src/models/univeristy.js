@@ -3,12 +3,19 @@
 const mongoose = require('mongoose');
 
 const University = new mongoose.Schema({
-    name: String,
+    name: {
+        type:String,
+        unique:true,
+        required:true
+    },
 
-    fieldsOfStudy: [{
+   fieldsOfStudy: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'FieldOfStudy'
     }],
+
+
+   //fieldsOfStudy:[ {type: String}]
 
 });
 
