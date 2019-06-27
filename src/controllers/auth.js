@@ -27,7 +27,7 @@ const login = (req,res) => {
 
             // if user is found and password is valid
             // create a token
-            const token = jwt.sign({ id: user._id, username: user.username }, config.JwtSecret, {
+            const token = jwt.sign({ id: user._id, username: user.username, isUniversityUser: user.isUniversityUser }, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
 
@@ -53,6 +53,11 @@ const register = (req,res) => {
         message: 'The request body must contain a username property'
     });
 
+    if (!Object.prototype.hasOwnProperty.call(req.body, 'isUniversityUser')) return res.status(400).json({
+        error: 'Bad Request',
+        message: 'The request body must be either Student or University property'
+    });
+
     const user = Object.assign(req.body, {password: bcrypt.hashSync(req.body.password, 8)});
 
 
@@ -61,7 +66,7 @@ const register = (req,res) => {
 
             // if user is registered without errors
             // create a token
-            const token = jwt.sign({ id: user._id, username: user.username }, config.JwtSecret, {
+            const token = jwt.sign({ id: user._id, username: user.username, isUniversityUser: user.isUniversityUser,  }, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
 

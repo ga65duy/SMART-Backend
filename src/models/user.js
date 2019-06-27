@@ -11,6 +11,12 @@ const UserSchema  = new mongoose.Schema({
         required: true,
         unique: true //<- no identical names
     },
+
+    isUniversityUser:{
+        type:Boolean,
+        required:true
+    },
+
     password: {
         type: String,
         required: true
@@ -26,7 +32,14 @@ const UserSchema  = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Studyplan'
         }
-}]
+}],
+    courses:[{
+        course:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Course'
+        }
+
+    }]
 
 });
 
