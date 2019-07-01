@@ -1,6 +1,5 @@
 "use strict";
 
-
 const mongoose = require('mongoose');
 
 // Define the user schema
@@ -23,27 +22,9 @@ const UserSchema  = new mongoose.Schema({
 
     },
     email: {
-        type:String
-
+        type:String,
+        required: true
     },
-
-    studplans: [{
-        studyplan: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Studyplan'
-        }
-}],
-    courses:[{
-        course:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'Course'
-        }
-
-    }]
-
 });
-
-UserSchema.set('versionKey', false);
-
 // Export the User model
 module.exports = mongoose.model('User', UserSchema);

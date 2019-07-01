@@ -11,7 +11,7 @@ const movie = require('./routes/movie');
 const course = require('./routes/course');
 const studyplan = require('./routes/studyplan');
 const university= require('./routes/university');
-const fos= require('./routes/fieldOfStudy')
+const fos= require('./routes/fieldOfStudy');
 
 const api = express();
 
