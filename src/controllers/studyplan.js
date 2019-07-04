@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Studyplan controllers for usecase: load studyplan and filter courses
+ * Author: Maria /Gerhard
+ */
 const StudyplanModel = require("../models/studyplan");
 
 const list  = (req, res) => {

@@ -45,7 +45,7 @@ const update = (req, res) => {
         });
     }
 
-    MovieModel.findByIdAndUpdate(req.params.id,req.body,{
+    MovieModel.findByIdAndUpdate(req.params.id, req.body,{
         new: true,
         runValidators: true}).exec()
         .then(movie => res.status(200).json(movie))

@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Routes for studyplan
+ * Author: Maria; Gerhard
+ */
 const express  = require('express');
 const router   = express.Router();
 

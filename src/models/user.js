@@ -1,14 +1,16 @@
 "use strict";
 
+/**
+ * Model for user. Representing the superclass from student and university user
+ *Author: Maria
+ */
 const mongoose = require('mongoose');
-
-// Define the user schema
 
 const UserSchema  = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true //<- no identical names
+        unique: true
     },
 
     isUniversityUser:{

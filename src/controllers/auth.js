@@ -1,5 +1,11 @@
 "use strict";
 
+/**
+ * AuthorizationController
+ *
+ * Used for Login,Register and change Profile
+ * Author: Maria
+ */
 const jwt        = require('jsonwebtoken');
 const bcrypt     = require('bcryptjs');
 
@@ -53,6 +59,11 @@ const validateUserProperties = (req,res) => {
         error: 'Bad Request',
         message: 'The request body must contain a password property'
     });
+    if (!Object.prototype.hasOwnProperty.call(req.body, 'email')) return res.status(400).json({
+        error: 'Bad Request',
+        message: 'The request body must contain a email property'
+    });
+
     if (!Object.prototype.hasOwnProperty.call(req.body, 'isUniversityUser')) return res.status(400).json({
         error: 'Bad Request',
         message: 'The request body must be either Student or University property'
@@ -67,14 +78,11 @@ const registerStudent = (req,res) => {
 
     Student.create(student)
         .then(student => {
-            // if user is registered without errors
-            // create a token
             const token = jwt.sign({ id: student._id, username: student.username, isUniversityUser: student.isUniversityUser,  }, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
 
             res.status(200).json({token: token});
-
         })
         .catch(error => {
             if(error.code == 11000) {
@@ -95,6 +103,7 @@ const registerStudent = (req,res) => {
 
 const registerUniUser = (req,res) => {
     validateUserProperties(req,res);
+    console.log("registering user")
     if (!Object.prototype.hasOwnProperty.call(req.body, 'university')) return res.status(400).json({
         error: 'Bad Request',
         message: 'The request body must contain a university property'
@@ -110,24 +119,19 @@ const registerUniUser = (req,res) => {
         message: 'The request body must contain a chair property'
     });
 
-
     const user = Object.assign(req.body, {password: bcrypt.hashSync(req.body.password, 8)});
 
 
     UniUser.create(user)
         .then(user => {
-            // if user is registered without errors
-            // create a token
             const token = jwt.sign
             ({
                 id: user._id, username: user.username, isUniversityUser: user.isUniversityUser,
-                faculty: user.faculty, chair: user.chair}, config.JwtSecret, {
+                university: user.university, faculty: user.faculty, chair: user.chair}, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
 
             res.status(200).json({token: token});
-
-
         })
         .catch(error => {
             if(error.code == 11000) {
@@ -146,69 +150,39 @@ const registerUniUser = (req,res) => {
 
 };
 
+const updateUser = (req, res) => {
+    if (Object.keys(req.body).length === 0)
+    {
+        return res.status(400).json({
+            error: 'Bad Request',
+            message: 'The request body is empty'
+        });
+    }
 
-
-
-// const register = (req,res) => {
-//     if (!Object.prototype.hasOwnProperty.call(req.body, 'password')) return res.status(400).json({
-//         error: 'Bad Request',
-//         message: 'The request body must contain a password property'
-//     });
-//
-//     if (!Object.prototype.hasOwnProperty.call(req.body, 'username')) return res.status(400).json({
-//         error: 'Bad Request',
-//         message: 'The request body must contain a username property'
-//     });
-//
-//     if (!Object.prototype.hasOwnProperty.call(req.body, 'isUniversityUser')) return res.status(400).json({
-//         error: 'Bad Request',
-//         message: 'The request body must be either Student or University property'
-//     });
-//
-//     const user = Object.assign(req.body, {password: bcrypt.hashSync(req.body.password, 8)});
-//
-//
-//     UserModel.create(user)
-//         .then(user => {
-//
-//             // if user is registered without errors
-//             // create a token
-//             const token = jwt.sign({ id: user._id, username: user.username, isUniversityUser: user.isUniversityUser,  }, config.JwtSecret, {
-//                 expiresIn: 86400 // expires in 24 hours
-//             });
-//
-//             res.status(200).json({token: token});
-//
-//
-//         })
-//         .catch(error => {
-//             if(error.code == 11000) {
-//                 res.status(400).json({
-//                     error: 'User exists',
-//                     message: error.message
-//                 })
-//             }
-//             else{
-//                 res.status(500).json({
-//                     error: 'Internal server error',
-//                     message: error.message
-//                 })
-//             }
-//         });
-//
-// };
-
+    UserModel.findByIdAndUpdate(req.body._id, req.body,{
+        new: true,
+        runValidators: true}).exec()
+        .then(user => {
+            res.status(200).json(user)
+        })
+        .catch(error => {
+            res.status(500).json({
+                error: 'Internal server error',
+                message: error.message
+            })
+        });
+};
 
 const me = (req, res) => {
-    console.log(req)
     UserModel.findById(req.userId).exec()
         .then(user => {
-
+            if (user.isUniversityUser) {
+                //TODO
+            }
             if (!user) return res.status(404).json({
                 error: 'Not Found',
                 message: `User not found`
             });
-
             res.status(200).json(user)
         })
         .catch(error => res.status(500).json({
@@ -227,5 +201,6 @@ module.exports = {
     registerUniUser,
     registerStudent,
     logout,
+    updateUser,
     me
 };
