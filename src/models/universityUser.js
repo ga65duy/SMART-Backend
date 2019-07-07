@@ -14,11 +14,8 @@ const UniversityUser = User.discriminator("UniversityUser", new mongoose.Schema(
         ref: "University"
     },
     courses:[{
-        course:{
             type: Schema.Types.ObjectId,
             ref:'Course'
-        }
-
     }],
     faculty: String,
     chair: String,

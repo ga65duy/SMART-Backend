@@ -3,9 +3,9 @@
  * Rating Model for the courses
  * Author: Maria
  */
-
 const mongoose = require('mongoose');
-//TODO: add references (student, course)
+const Schema = mongoose.Schema;
+
 const Rating = new mongoose.Schema({
     lecturerRating: {
         type: Number
@@ -24,6 +24,17 @@ const Rating = new mongoose.Schema({
     },
     title: {
         type:String
+    },
+    course:{
+        type: Schema.Types.ObjectId,
+        ref:'Course'
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref:'User'
+    },
+    createdAt: {
+        type: String,
     }
 
 });

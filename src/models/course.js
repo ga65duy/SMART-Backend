@@ -7,15 +7,19 @@ const Course = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique: true //<- no identical names
+        unique: true
     },
+    description: String,
     area: [String],
     ects: Number,
     avgRatingOverall: Number,
     avgRatingLecturer: Number,
     avgRatingExam:Number,
-    avgRatingContent: Number
-
+    avgRatingContent: Number,
+    ratings:[{
+            type: Schema.Types.ObjectId,
+            ref:'Rating'
+    }],
 });
 
 module.exports = mongoose.model('Course', Course);

@@ -3,7 +3,13 @@
 const CourseModel = require("../models/course");
 
 const list  = (req, res) => {
-    CourseModel.find({}).exec()  // .find({id:x,name:"f", $contains(synopsis:"asdj")}).exec()....
+    CourseModel.find({}).populate({
+        path: "ratings",
+        populate: {
+            path:"user",
+            model: "User"
+        }
+    }).exec()
         .then(course => res.status(200).json(course))
         .catch(error => res.status(500).json({
             error: 'Internal server error',
@@ -12,7 +18,13 @@ const list  = (req, res) => {
 };
 
 const read   = (req, res) => {
-    CourseModel.findById(req.params.id).exec()
+    CourseModel.findById(req.params.id).populate({
+        path: "ratings",
+        populate: {
+            path: "user",
+            model: "User"
+        }
+        }).exec()
         .then(course => {
 
             if (!course) return res.status(404).json({
