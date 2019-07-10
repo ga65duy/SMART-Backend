@@ -2,21 +2,26 @@
 
 const UniversityModel = require("../models/univeristy");
 
+
+
+
 const list  = (req, res) => {
-    UniversityModel.find({}).exec()  // .find({id:x,name:"f", $contains(synopsis:"asdj")}).exec()....
-        .then(university => res.status(200).json(university))
+    UniversityModel.find({}).populate('fieldsOfStudy').exec()
+        .then(data => res.status(200).json(data))
         .catch(error => res.status(500).json({
             error: 'Internal server error',
             message: error.message
         }));
 };
+
+
 const read   = (req, res) => {
     UniversityModel.findById(req.params.id).exec()
         .then(university => {
 
             if (!university) return res.status(404).json({
                 error: 'Not Found',
-                message: `Studyplan not found`
+                message: `University not found`
             });
 
             res.status(200).json(university)

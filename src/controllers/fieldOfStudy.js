@@ -12,7 +12,7 @@ const list  = (req, res) => {
 };
 
 const read   = (req, res) => {
-    FieldOfStudyModel.findById(req.params.id).exec()
+    FieldOfStudyModel.findById(req.params.id).populate('mandatory', 'elective','recommendedSemester1','recommendedSemester2','recommendedSemester3','recommendedSemester4','recommendedSemester5','recommendedSemester6','recommendedSemester7','recommendedSemester8').exec()
         .then(fos => {
 
             if (!fos) return res.status(404).json({
