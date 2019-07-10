@@ -80,7 +80,7 @@ const update = (req, res) => {
         }));
 };
 
-const listCoursesWithUserRating = (req, res) => {
+const listCoursesOfAUser = (req, res) => {
     RatingModel.find({user: req.params.id}).exec()
         .then(ratingsOfuser => {
             let courseIds = [];
@@ -113,7 +113,7 @@ const listCoursesWithUserRating = (req, res) => {
 
 module.exports = {
     list,
-    listCoursesWithUserRating,
+    listCoursesOfAUser,
     read,
     create,
     update

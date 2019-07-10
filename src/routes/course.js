@@ -6,13 +6,10 @@ const router   = express.Router();
 const middlewares    = require('../middlewares');
 const CourseController = require('../controllers/course');
 
-
 router.get('/', CourseController.list);
 router.get('/:id', CourseController.read);
 router.post('/', middlewares.checkAuthentication, CourseController.create);
 router.put('/:id', middlewares.checkAuthentication, CourseController.update);
-router.get('/ratings/user/:id', CourseController.listCoursesWithUserRating);
-
-
+router.get('/ratings/user/:id', CourseController.listCoursesOfAUser);
 
 module.exports = router;
