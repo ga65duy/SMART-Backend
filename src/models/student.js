@@ -9,7 +9,7 @@ const User = require("./user");
 
 const Student = User.discriminator("Student", new mongoose.Schema({
 
-studplans: [{
+studyplans: [{
     studyplan: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Studyplan'

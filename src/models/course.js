@@ -9,6 +9,8 @@ const Course = new mongoose.Schema({
         required: true,
         unique: true
     },
+    availableSS: Boolean,
+    availableWS: Boolean,
     description: String,
     area: [String],
     ects: Number,
