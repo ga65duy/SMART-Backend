@@ -15,7 +15,7 @@ const FieldOfStudy = new mongoose.Schema({
         enum: staticData.degree,
     },
     validityPeriod: Date,
-    madatory: [{
+    mandatory: [{
         type: Schema.Types.ObjectId,
         ref: 'Course',
         required: true //wirklich required?

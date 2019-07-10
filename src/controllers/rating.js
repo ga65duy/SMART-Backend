@@ -6,7 +6,7 @@
  */
 const RatingModel = require("../models/rating");
 const CourseModel = require("../models/course");
-
+const mongoose = require('mongoose');
 
 function calculateAvgRatings(course) {
     let numberOfRatings = course.ratings.length;
@@ -50,7 +50,7 @@ const create = (req, res) => {
             let ratingId = rating._id;
             let courseId = rating.course;
             CourseModel.findByIdAndUpdate(courseId, {
-                    "$push": {"ratings": ratingId}
+                    $push: {"ratings": ratingId}
                 }, {
                     new: true,
                     runValidators: true
@@ -86,7 +86,7 @@ const create = (req, res) => {
 
 const list = (req, res) => {
     RatingModel.find({}).populate("user").exec()
-        .then(movies => res.status(200).json(movies))
+        .then(rating => res.status(200).json(rating))
         .catch(error => res.status(500).json({
             error: 'Internal server error',
             message: error.message
@@ -97,11 +97,10 @@ const remove = (req, res) => {
     console.log(req.params.id);
     RatingModel.findByIdAndRemove(req.params.id, req.body).exec()
         .then(rating => {
-            console.log("First remove sucess")
             let ratingId = rating._id;
             let courseId = rating.course;
             CourseModel.findByIdAndUpdate(courseId, {
-                    "$pull": {"ratings": ratingId}
+                    $pull: {"ratings": mongoose.Types.ObjectId(ratingId)}
                 }, {
                     new: true,
                     runValidators: true
@@ -111,18 +110,16 @@ const remove = (req, res) => {
                 model: 'Rating',
             })
                 .exec().then((course) => {
-                    console.log("Seccond remove sucess")
                     let avgRatings = calculateAvgRatings(course);
 
                     CourseModel.findByIdAndUpdate(courseId, avgRatings, {
                         new: true,
                         runValidators: true
                     }).exec().then((course) => {
-                            console.log("Third remove sucess")
                             res.status(201).json(rating)
                         }
                     ).catch(error => {
-                        console.log(error.message)
+                        console.log(error.message);
                         res.status(500).json({
                             error: 'Internal server error',
                             message: error.message
@@ -136,27 +133,6 @@ const remove = (req, res) => {
             message: error.message
         })))
 };
-
-/*const update = (req, res) => {
-    if (Object.keys(req.body).length === 0) return res.status(400).json({
-        error: 'Bad Request',
-        message: 'The request body is empty'
-    });
-
-    console.log(req.params.id);
-    RatingModel.findByIdAndUpdate(req.params.id, req.body).exec()
-        .then((rating) => {
-                        res.status(201).json(rating)}
-                    ).catch(error => {
-                        res.status(500).json({
-                            error: 'Internal server error',
-                            message: error.message
-                        })})
-        .catch((error => res.status(500).json({
-            error: 'Internal server error',
-            message: error.message
-        })))
-};*/
 
 
 module.exports = {

@@ -1,6 +1,12 @@
 "use strict";
-
+/**
+ * Controller for course
+ * Defining CRUD operations for courses
+ * Author: Gerhard and Maria
+ */
 const CourseModel = require("../models/course");
+const RatingModel = require("../models/rating");
+const mongoose = require('mongoose');
 
 const list  = (req, res) => {
     CourseModel.find({}).populate({
@@ -39,7 +45,6 @@ const read   = (req, res) => {
             error: 'Internal Server Error',
             message: error.message
         }));
-
 };
 
 const create = (req, res) => {
@@ -75,9 +80,40 @@ const update = (req, res) => {
         }));
 };
 
+const listCoursesWithUserRating = (req, res) => {
+    RatingModel.find({user: req.params.id}).exec()
+        .then(ratingsOfuser => {
+            let courseIds = [];
+            for (let i = 0; i< ratingsOfuser.length; i++){
+                courseIds.push(ratingsOfuser[i]["course"])
+            }
+            courseIds = courseIds.map(function (courseId) {
+                return mongoose.Types.ObjectId(courseId)
+            });
+            CourseModel.find({
+                "_id": {$in: courseIds}
+            }).populate({path: "ratings",
+                    populate: {
+                        path: "user",
+                        model: "User"
+                    }}).exec().then(courses => {
+                res.status(200).json(courses)
+            }).catch(error => res.status(500).json({
+                error: 'Internal server error',
+                message: error.message
+            }));
+        }
+        )
+        .catch(error => res.status(500).json({
+            error: 'Internal server error',
+            message: error.message
+        }));
+};
+
 
 module.exports = {
     list,
+    listCoursesWithUserRating,
     read,
     create,
     update
