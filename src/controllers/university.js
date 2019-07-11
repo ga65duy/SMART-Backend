@@ -1,6 +1,7 @@
 "use strict";
 
 const UniversityModel = require("../models/univeristy");
+const CourseModel = require("../models/course");
 
 
 
@@ -68,10 +69,41 @@ const update = (req, res) => {
         }));
 };
 
+/**
+ * Find all courses from university.
+ * Author: Maria
+ */
+const getCoursesFromUniversity = (req, res) => {
+    UniversityModel.findById(req.params.id).populate("fieldsOfStudy").exec()
+        .then(university => {
+            let allCourses = [];
+            let numFieldOfStudy = university.fieldsOfStudy.length;
+            for (let i = 0; i < numFieldOfStudy; i++) {
+                let electiveCourses = university.fieldsOfStudy[i].elective;
+                let mandatoryCourses = university.fieldsOfStudy[i].mandatory;
+                allCourses.push(...electiveCourses);
+                allCourses.push(...mandatoryCourses);
+            }
+            let unique = [...new Set(allCourses)];
+            CourseModel.find({"_id": {$in: unique}}).exec()
+                .then(courses => {
+                    res.status(200).json(courses)
+                })
+                .catch(error => res.status(500).json({
+                error: 'Internal server error',
+                message: error.message
+            }));
+        })
+        .catch(error => res.status(500).json({
+            error: 'Internal server error',
+            message: error.message
+        }));
+};
 
 module.exports = {
     list,
     read,
     create,
-    update
+    update,
+    getCoursesFromUniversity
 };
