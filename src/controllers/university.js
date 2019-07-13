@@ -4,9 +4,7 @@ const UniversityModel = require("../models/univeristy");
 const CourseModel = require("../models/course");
 
 
-
-
-const list  = (req, res) => {
+const list = (req, res) => {
     UniversityModel.find({}).populate('fieldsOfStudy').exec()
         .then(data => res.status(200).json(data))
         .catch(error => res.status(500).json({
@@ -16,7 +14,7 @@ const list  = (req, res) => {
 };
 
 
-const read   = (req, res) => {
+const read = (req, res) => {
     UniversityModel.findById(req.params.id).exec()
         .then(university => {
 
@@ -43,7 +41,7 @@ const create = (req, res) => {
     });
 
     UniversityModel.create(req.body)
-        .then( university=> res.status(201).json(university))
+        .then(university => res.status(201).json(university))
         .catch(error => res.status(500).json({
             error: 'Internal server error',
             message: error.message
@@ -51,17 +49,17 @@ const create = (req, res) => {
 };
 
 const update = (req, res) => {
-    if (Object.keys(req.body).length === 0)
-    {
+    if (Object.keys(req.body).length === 0) {
         return res.status(400).json({
             error: 'Bad Request',
             message: 'The request body is empty'
         });
     }
 
-    UniversityModel.findByIdAndUpdate(req.params.id,req.body,{
+    UniversityModel.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
-        runValidators: true}).exec()
+        runValidators: true
+    }).exec()
         .then(university => res.status(200).json(university))
         .catch(error => res.status(500).json({
             error: 'Internal server error',
@@ -90,9 +88,9 @@ const getCoursesFromUniversity = (req, res) => {
                     res.status(200).json(courses)
                 })
                 .catch(error => res.status(500).json({
-                error: 'Internal server error',
-                message: error.message
-            }));
+                    error: 'Internal server error',
+                    message: error.message
+                }));
         })
         .catch(error => res.status(500).json({
             error: 'Internal server error',
@@ -100,10 +98,24 @@ const getCoursesFromUniversity = (req, res) => {
         }));
 };
 
+/**
+ * Find all fos from university.
+ * Author: Maria
+ */
+const getFieldOfStudyFromUniversity = (req, res) => {
+    const uniId = req.params.id;
+    UniversityModel.findById(uniId).populate("fieldsOfStudy").exec()
+        .then((uni) => res.status(200).json(uni.fieldsOfStudy))
+        .catch(error => res.status(500).json({
+            error: 'Internal server error',
+            message: error.message
+        }));
+}
 module.exports = {
     list,
     read,
     create,
     update,
-    getCoursesFromUniversity
+    getCoursesFromUniversity,
+    getFieldOfStudyFromUniversity
 };

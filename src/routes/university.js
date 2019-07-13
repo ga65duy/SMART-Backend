@@ -11,5 +11,6 @@ router.get('/:id', UniversityController.read);
 router.put('/:id', UniversityController.update);
 router.post('/', UniversityController.create);
 router.get('/:id/courses', UniversityController.getCoursesFromUniversity);
+router.get('/:id/fos', UniversityController.getFieldOfStudyFromUniversity);
 
 module.exports = router;
