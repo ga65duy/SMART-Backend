@@ -1,5 +1,10 @@
 "use strict";
 
+/**
+ * Model for courses
+ * Author: Maria
+ */
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -16,7 +21,7 @@ const Course = new mongoose.Schema({
     ects: Number,
     avgRatingOverall: Number,
     avgRatingLecturer: Number,
-    avgRatingExam:Number,
+    avgRatingExam: Number,
     avgRatingContent: Number,
     ratings:[{
             type: Schema.Types.ObjectId,
