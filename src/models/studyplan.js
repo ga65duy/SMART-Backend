@@ -20,23 +20,18 @@ const Studyplan = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
     }],
-
     semester2: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
     }],
-
     semester3: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
     }],
-
-
     semester4: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
     }],
-
     semester5: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'

@@ -78,7 +78,8 @@ const registerStudent = (req,res) => {
 
     Student.create(student)
         .then(student => {
-            const token = jwt.sign({ id: student._id, username: student.username, isUniversityUser: student.isUniversityUser,  }, config.JwtSecret, {
+            const token = jwt.sign({ id: student._id, username: student.username, isUniversityUser: student.isUniversityUser,
+            email:student.email, studyplans:studen.studyplans}, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
 

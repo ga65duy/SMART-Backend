@@ -1,14 +1,14 @@
 {
   "name": "sebamaster-movie-backend",
   "version": "1.0.0",
-  "description": "EBAMaster movie backend as a service",
+  "description": "SEBAMaster movie backend as a service",
   "main": "index.js",
   "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/sebischair/sebamaster-movie-backend.git"
   },
-  "author": "sebischair",
+  "author": "Team 19",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sebischair/sebamaster-movie-backend/issues"
