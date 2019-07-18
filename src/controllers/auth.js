@@ -79,13 +79,14 @@ const registerStudent = (req,res) => {
     Student.create(student)
         .then(student => {
             const token = jwt.sign({ id: student._id, username: student.username, isUniversityUser: student.isUniversityUser,
-            email:student.email, studyplans:studen.studyplans}, config.JwtSecret, {
+            email:student.email, studyplans:student.studyplans}, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
 
             res.status(200).json({token: token});
         })
         .catch(error => {
+            console.log(error)
             if(error.code == 11000) {
                 res.status(400).json({
                     error: 'User exists',
