@@ -3,15 +3,15 @@
 const mongoose = require('mongoose');
 
 const Studyplan = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+    },
     name:{
         type: String,
-        required:true,
-        unique: true
+        required:true
     },
-
     startSemester: String,
-
-
     fieldOfStudy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'FieldOfStudy'

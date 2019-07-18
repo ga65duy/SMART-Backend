@@ -3,6 +3,7 @@
  * Studyplan controllers for usecase: load studyplan and filter courses
  * Author: Maria /Gerhard
  */
+const StudentModel = require("../models/student");
 const StudyplanModel = require("../models/studyplan");
 const Course = require("../models/course");
 
@@ -40,11 +41,32 @@ const create = (req, res) => {
     });
 
     StudyplanModel.create(req.body)
-        .then( studyplan=> res.status(201).json(studyplan))
-        .catch(error => res.status(500).json({
+        .then( studyplan => {
+
+            const studyplanId = studyplan._id;
+            const userId = req.body.user;
+
+            StudentModel.findByIdAndUpdate(userId, {
+                $push: {"studyplans": studyplanId}
+            }, {
+                new: true,
+                runValidators: true
+            }).exec().then((user) => {
+                res.status(201).json(studyplan);
+            }).catch(error => {
+                res.status(500).json({
+                    error: 'Internal server error',
+                    message: error.message
+                });
+            })
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({
             error: 'Internal server error',
             message: error.message
-        }));
+        })
+        });
 };
 
 const update = (req, res) => {

@@ -159,16 +159,18 @@ const updateStudentUser = (req, res) => {
             message: 'The request body is empty'
         });
     }
-    console.log(req.body)
+
     Student.findByIdAndUpdate(req.body._id, req.body,{
         new: true,
         runValidators: true}).exec()
         .then(user => {
-            console.log("update sucessfull")
+            console.log("update successful")
             console.log(user)
             res.status(200).json(user)
         })
         .catch(error => {
+            console.log("update unsuccessful")
+            console.log(error)
             res.status(500).json({
                 error: 'Internal server error',
                 message: error.message
