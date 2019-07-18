@@ -79,13 +79,14 @@ const registerStudent = (req,res) => {
     Student.create(student)
         .then(student => {
             const token = jwt.sign({ id: student._id, username: student.username, isUniversityUser: student.isUniversityUser,
-            email:student.email, studyplans:studen.studyplans}, config.JwtSecret, {
+            email:student.email, studyplans:student.studyplans}, config.JwtSecret, {
                 expiresIn: 86400 // expires in 24 hours
             });
 
             res.status(200).json({token: token});
         })
         .catch(error => {
+            console.log(error)
             if(error.code == 11000) {
                 res.status(400).json({
                     error: 'User exists',
@@ -159,16 +160,18 @@ const updateStudentUser = (req, res) => {
             message: 'The request body is empty'
         });
     }
-    console.log(req.body)
+
     Student.findByIdAndUpdate(req.body._id, req.body,{
         new: true,
         runValidators: true}).exec()
         .then(user => {
-            console.log("update sucessfull")
+            console.log("update successful")
             console.log(user)
             res.status(200).json(user)
         })
         .catch(error => {
+            console.log("update unsuccessful")
+            console.log(error)
             res.status(500).json({
                 error: 'Internal server error',
                 message: error.message
