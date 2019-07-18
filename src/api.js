@@ -7,7 +7,6 @@ const helmet     = require('helmet');
 const middlewares = require('./middlewares');
 
 const auth  = require('./routes/auth');
-const movie = require('./routes/movie');
 const course = require('./routes/course');
 const studyplan = require('./routes/studyplan');
 const university= require('./routes/university');
@@ -33,7 +32,6 @@ api.get('/', (req, res) => {
 
 // API routes
 api.use('/auth'  , auth);
-api.use('/movies', movie);
 api.use('/courses', course);
 api.use('/studyplan', studyplan);
 api.use('/university',university);

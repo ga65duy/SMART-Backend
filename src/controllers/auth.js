@@ -187,13 +187,12 @@ const updateUniUser = (req, res) => {
             message: 'The request body is empty'
         });
     }
-    console.log(req.body)
+
     UniUser.findByIdAndUpdate(req.body._id, req.body,{
         new: true,
         runValidators: true}).exec()
         .then(user => {
             console.log("update sucessfull")
-            console.log(user)
             res.status(200).json(user)
         })
         .catch(error => {
