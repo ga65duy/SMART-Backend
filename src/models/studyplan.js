@@ -53,10 +53,10 @@ const Studyplan = new mongoose.Schema({
     }],
 
 
-    /*courses: [{
+    notChosenCourses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
-    }],*/
+    }],
 
 });
 
