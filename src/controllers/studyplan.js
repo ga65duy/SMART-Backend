@@ -16,16 +16,17 @@ const list = (req, res) => {
         }));
 };
 const read = (req, res) => {
-    StudyplanModel.findById(req.params.id).populate([{path: 'semester1', model: Course}, {
-        path: 'semester2',
-        model: Course
-    }, {path: 'semester3', model: Course}, {path: 'semester4', model: Course}, {
-        path: 'semester5',
-        model: Course
-    }, {path: 'semester6', model: Course}, {path: 'semester7', model: Course}, {
-        path: 'semester8',
-        model: Course
-    }, {path: 'notChosenCourses', model: Course}]).exec()
+    StudyplanModel.findById(req.params.id).populate(
+        [
+            {path: 'semester1', model: Course},
+            {path: 'semester2', model: Course},
+            {path: 'semester3', model: Course},
+            {path: 'semester4', model: Course},
+            {path: 'semester5', model: Course},
+            {path: 'semester6', model: Course},
+            {path: 'semester7', model: Course},
+            {path: 'semester8', model: Course},
+            {path: 'notChosenCourses', model: Course}]).exec()
         .then(studyplan => {
 
             if (!studyplan) return res.status(404).json({
