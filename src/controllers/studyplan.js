@@ -6,6 +6,7 @@
 const StudentModel = require("../models/student");
 const StudyplanModel = require("../models/studyplan");
 const Course = require("../models/course");
+const FieldOfStudy = require("../models/fieldOfStudy");
 
 const list = (req, res) => {
     StudyplanModel.find({}).exec()
