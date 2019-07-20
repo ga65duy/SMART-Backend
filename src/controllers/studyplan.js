@@ -6,6 +6,7 @@
 const StudentModel = require("../models/student");
 const StudyplanModel = require("../models/studyplan");
 const Course = require("../models/course");
+const FieldOfStudy=require("../models/fieldOfStudy");
 
 const list = (req, res) => {
     StudyplanModel.find({}).exec()
@@ -25,7 +26,7 @@ const read = (req, res) => {
     }, {path: 'semester6', model: Course}, {path: 'semester7', model: Course}, {
         path: 'semester8',
         model: Course
-    }, {path: 'notChosenCourses', model: Course}]).exec()
+    }, {path: 'notChosenCourses', model: Course}, {path:'fieldOfStudy', model: FieldOfStudy}]).exec()
         .then(studyplan => {
 
             if (!studyplan) return res.status(404).json({
