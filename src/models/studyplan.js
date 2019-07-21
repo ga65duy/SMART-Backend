@@ -12,6 +12,7 @@ const Studyplan = new mongoose.Schema({
         required:true
     },
     startSemester: String,
+    wsSs:String, //start in WS/SS
     fieldOfStudy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'FieldOfStudy'

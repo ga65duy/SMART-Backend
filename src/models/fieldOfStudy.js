@@ -55,6 +55,7 @@ const FieldOfStudy = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
     }],
+    startSemester: String,
 });
 
 module.exports = mongoose.model('FieldOfStudy', FieldOfStudy);
