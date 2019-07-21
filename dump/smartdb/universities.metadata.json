@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"smartdb.universities"},{"v":2,"unique":true,"key":{"name":1},"name":"name_1","ns":"smartdb.universities","background":true}],"uuid":"b2f3cd17b8734c2796df3227af5563ce"}

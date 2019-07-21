@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"smartdb.studyplans"},{"v":2,"unique":true,"key":{"name":1},"name":"name_1","ns":"smartdb.studyplans","background":true}],"uuid":"7010e2a192fd4bad9ceec66060711cdc"}
